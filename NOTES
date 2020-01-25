@@ -1,0 +1,5 @@
+create the auth.log file or fail2ban will failed still need docker run --privileged=true or iptables will failed.
+still need docker run --privileged=true or iptables will failed.
+visit http://www.jlee.biz/iptables-in-docker-permission-denied/ 
+hardening.sh will fixed start issue. This only to init needed files.
+

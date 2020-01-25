@@ -83,8 +83,6 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile && \
 
 echo "create the auth.log file or fail2ban will failed still need docker run --privileged=true or iptables will failed." \
-echo "still need docker run --privileged=true or iptables will failed." \
-echo "visit http://www.jlee.biz/iptables-in-docker-permission-denied/ " \
 echo "hardening.sh will fixed start issue. This only to init needed files." \
 
     touch /var/log/auth.log && \
