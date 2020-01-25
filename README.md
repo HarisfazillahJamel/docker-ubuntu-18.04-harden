@@ -14,6 +14,12 @@ This docker is installed with :-
 
 Latest information in the docker/Dockerfile and hardening[.]sh
 
+[https://github.com/HarisfazillahJamel/docker-ubuntu-18.04-harden](https://github.com/HarisfazillahJamel/docker-ubuntu-18.04-harden)
+
+Dockerfile still with this warning.
+
+[WARNING]: Empty continuation lines will become errors in a future release.
+
 ### To Install On Your Server
 ```sh
 docker pull linuxmalaysia/docker-ubuntu-18.04-harden

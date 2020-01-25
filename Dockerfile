@@ -57,49 +57,41 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && \
     curl \
     pwgen \
     unbound \
+    bash \
     software-properties-common \
     vim-tiny && \
 
 
-# Install ansible
+echo "Install ansible"
 
     apt-add-repository -y ppa:ansible/ansible && \
     apt-get update && \
     apt-get install -y ansible && \
 
-# Upgrade others
-# refer https://github.com/docker/docker/issues/1724
+echo "Upgrade others refer https://github.com/docker/docker/issues/1724"
 
     apt-get upgrade -y && \
-
-# cleanup
     apt-get clean && \
 
-
-# setup ssh server
-
-# SSH login fix. Otherwise user is kicked off after login
+echo "SSH Server and SSH login fix. Otherwise user is kicked off after login"
 
     sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
 
     echo "### End Of Installation"
 
-
-### End installation
-
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile && \
 
-# create the auth.log file or fail2ban will failed
-# still need docker run --privileged=true or iptables will failed.
-# http://www.jlee.biz/iptables-in-docker-permission-denied/
-# hardening.sh will fixed start issue. This only to init needed files.
+echo "create the auth.log file or fail2ban will failed
+ still need docker run --privileged=true or iptables will failed.
+ http://www.jlee.biz/iptables-in-docker-permission-denied/
+ hardening.sh will fixed start issue. This only to init needed files."
 
     touch /var/log/auth.log && \
 ### error no user ####    chown syslog:adm /var/log/auth.log && \
     service fail2ban restart && \
 
-# Add user1
+echo "Add user1"
 
     useradd user1 -m -s /bin/bash && \
     pwgen -N 1 > password.txt && \
@@ -118,22 +110,20 @@ RUN echo "export VISIBLE=now" >> /etc/profile && \
     echo " " && \
     echo "########################################" && \
 
-# A GITHUB copy of linuxmalaysia/docker-ubuntu-14.04-harden
+echo "A GITHUB copy of linuxmalaysia/docker-ubuntu-18.04-harden"
 
     cd /home/user1/GITHUB && \
     git clone https://github.com/HarisfazillahJamel/docker-ubuntu-18.04-harden.git && \
     cd && \
     pwd
 
-# Hardening Initialization and Startup Script
+echo "Hardening Initialization and Startup Script"
+
 ADD hardening.sh /hardening.sh
 RUN chmod 755 /hardening.sh
 
-# Expose the default port
 EXPOSE 22
 
 VOLUME ["/var/run/sshd"]
-
-# Set default container command
 
 CMD ["/bin/bash","/hardening.sh"]
