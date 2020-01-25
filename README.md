@@ -36,10 +36,10 @@ ssh user1@localhost -p ?????
 ```
 ### To build yourself
 ```sh
-git clone https://github.com/HarisfazillahJamel/docker-ubuntu-14.04-harden.git
+git clone https://github.com/HarisfazillahJamel/docker-ubuntu-18.04-harden.git
 ```
 ```sh
-cd docker-ubuntu-14.04-harden
+cd docker-ubuntu-18.04-harden
 ```
 ```sh
 docker build -t docker-ubuntu-18.04-harden .
