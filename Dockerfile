@@ -96,7 +96,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile && \
 # hardening.sh will fixed start issue. This only to init needed files.
 
     touch /var/log/auth.log && \
-    chown syslog:adm /var/log/auth.log && \
+### error no user ####    chown syslog:adm /var/log/auth.log && \
     service fail2ban restart && \
 
 # Add user1
@@ -113,15 +113,15 @@ RUN echo "export VISIBLE=now" >> /etc/profile && \
     echo "PASSWORD For user1 is `cat password.txt`" && \
     echo " " && \
     echo "example to run :- " && \
-    echo "docker pull linuxmalaysia/docker-ubuntu-14.04-harden" && \
-    echo "docker run --privileged=true -it -d -P --name my_ubuntu1 linuxmalaysia/docker-ubuntu-14.04-harden" && \
+    echo "docker pull linuxmalaysia/docker-ubuntu-18.04-harden" && \
+    echo "docker run --privileged=true -it -d -P --name my_ubuntu1 linuxmalaysia/docker-ubuntu-18.04-harden" && \
     echo " " && \
     echo "########################################" && \
 
 # A GITHUB copy of linuxmalaysia/docker-ubuntu-14.04-harden
 
     cd /home/user1/GITHUB && \
-    git clone https://github.com/HarisfazillahJamel/docker-ubuntu-14.04-harden.git && \
+    git clone https://github.com/HarisfazillahJamel/docker-ubuntu-18.04-harden.git && \
     cd && \
     pwd
 
