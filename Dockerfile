@@ -82,9 +82,9 @@ echo "SSH Server and SSH login fix. Otherwise user is kicked off after login" \
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile && \
 
-echo "create the auth.log file or fail2ban will failed
- still need docker run --privileged=true or iptables will failed.
- http://www.jlee.biz/iptables-in-docker-permission-denied/
+echo "create the auth.log file or fail2ban will failed \
+ still need docker run --privileged=true or iptables will failed. \
+ http://www.jlee.biz/iptables-in-docker-permission-denied/ \
  hardening.sh will fixed start issue. This only to init needed files." \
 
     touch /var/log/auth.log && \
