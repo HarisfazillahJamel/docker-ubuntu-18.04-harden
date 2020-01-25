@@ -56,8 +56,6 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && \
     wget \
     curl \
     pwgen \
-    harden \
-    harden-nids \
     unbound \
     software-properties-common \
     vim-tiny && \
