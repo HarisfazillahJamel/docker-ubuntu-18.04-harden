@@ -50,7 +50,6 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && \
     ssh \
     ssh-client \
     openssh-server \
-    ufw \
     fail2ban \
     git \
     wget \
@@ -59,6 +58,7 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && \
     unbound \
     bash \
     sudo \
+    rsyslog \
     software-properties-common \
     vim-tiny && \
 
