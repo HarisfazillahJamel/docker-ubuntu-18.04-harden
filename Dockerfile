@@ -58,6 +58,7 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && \
     pwgen \
     unbound \
     bash \
+    sudo \
     software-properties-common \
     vim-tiny && \
 
@@ -91,11 +92,6 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && \
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile && \
 
-# create the auth.log file or fail2ban will failed
-# still need docker run --privileged=true or iptables will failed.
-# http://www.jlee.biz/iptables-in-docker-permission-denied/
-# hardening.sh will fixed start issue. This only to init needed files.
-
     touch /var/log/auth.log && \
 ### error no user ####    chown syslog:adm /var/log/auth.log && \
     service fail2ban restart && \
@@ -105,7 +101,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile && \
     useradd user1 -m -s /bin/bash && \
     pwgen -N 1 > password.txt && \
     echo "user1:`cat password.txt`" | chpasswd && \
-    usermod -G sudo user1 && \
+    usermod -a -G sudo user1 && \
     mkdir -p /home/user1/GITHUB && \
     chown user1:user1 /home/user1/GITHUB && \
 
