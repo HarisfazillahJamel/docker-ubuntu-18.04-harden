@@ -63,9 +63,7 @@ ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -N ""
 
 #service snort restart
 
-#### Only ssh daemon will be the last execute
-# SSH run in foreground and not detached
+echo "password for user1"
+cat /home/user1/password.txt
 
-####/usr/sbin/sshd -D
-
-exit 0
+#exit 0

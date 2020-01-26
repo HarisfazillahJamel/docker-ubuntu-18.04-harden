@@ -1,16 +1,12 @@
 # Docker Ubuntu 18.04 Harden With SSH - OpenSSH
 
-Docker Container With Ubuntu 18.04 LTS harden and secure. Include SSH OpenSSH to access the server. The default user is user1 and the password in the latest builds details log. Visit this website for latest information about this docker and latest builds details.
+Docker Container With Ubuntu 18.04 LTS harden and secure. Include SSH OpenSSH to access the server. The default user is user1 and the password is here :-
 
 [https://hub.docker.com/repository/docker/linuxmalaysia/docker-ubuntu-18.04-harden](https://hub.docker.com/repository/docker/linuxmalaysia/docker-ubuntu-18.04-harden)
 
 This docker is installed with :-
 
 - OpenSSH
-- Fail2ban
-- UFW with 22/tcp allow and default deny
-- Harden and harden-nids packages
-- docker run --privileged=true is needed by iptables
 
 Latest information in the docker/Dockerfile and hardening[.]sh
 
@@ -28,6 +24,7 @@ docker pull linuxmalaysia/docker-ubuntu-18.04-harden
 docker run --privileged=true -it -d -P --name my_ubuntu1 linuxmalaysia/docker-ubuntu-18.04-harden
 ```
 You can then use docker port to find out what host port, the container's port 22 is mapped to :-
+
 ```sh
 docker port my_ubuntu1
 ```
@@ -50,7 +47,7 @@ cd docker-ubuntu-18.04-harden
 docker build -t docker-ubuntu-18.04-harden .
 ```
 ```sh
-docker run --privileged=true -it -d -P --name my_ubuntu1 docker-ubuntu-18.04-harden
+docker run --privileged=true -it -d -P --name my_ubuntu18 docker-ubuntu-18.04-harden
 ```
 haris @ Harisfazillah Jamel @ LinuxMalaysia
 

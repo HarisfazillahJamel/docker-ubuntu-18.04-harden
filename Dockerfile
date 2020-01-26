@@ -94,6 +94,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile && \
     echo "user1:`cat password.txt`" | chpasswd && \
     usermod -a -G sudo user1 && \
     mkdir -p /home/user1/GITHUB && \
+    cp password.txt /home/user1 && \
     chown user1:user1 /home/user1/GITHUB && \
 
     echo "########################################" && \
@@ -102,7 +103,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile && \
     echo " " && \
     echo "example to run :- " && \
     echo "docker pull linuxmalaysia/docker-ubuntu-18.04-harden" && \
-    echo "docker run --privileged=true -it -d -P --name my_ubuntu1 linuxmalaysia/docker-ubuntu-18.04-harden" && \
+    echo "docker run --privileged=true -it -d -P --name my_ubuntu18 linuxmalaysia/docker-ubuntu-18.04-harden" && \
     echo " " && \
     echo "########################################" && \
 
@@ -116,6 +117,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile && \
 # Hardening Initialization and Startup Script
 ADD hardening.sh /hardening.sh
 RUN chmod 755 /hardening.sh
+RUN echo "echo \"`cat /home/user1/password.txt`\"" >> /hardening.sh
 
 # Expose the default port
 EXPOSE 22
