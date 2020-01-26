@@ -66,6 +66,6 @@ ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -N ""
 #### Only ssh daemon will be the last execute
 # SSH run in foreground and not detached
 
-/usr/sbin/sshd -D
+####/usr/sbin/sshd -D
 
 exit 0

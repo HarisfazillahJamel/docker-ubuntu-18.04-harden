@@ -61,30 +61,22 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && \
     vim-tiny
 
 # Install ansible
-
-RUN apt-add-repository -y ppa:ansible/ansible && \
-    apt-get update && \
-    apt-get install -y ansible && \
-
 # Upgrade others
 # refer https://github.com/docker/docker/issues/1724
-
-    apt-get upgrade -y && \
-
-# cleanup
-    apt-get clean && \
-
-
 # setup ssh server
-
 # SSH login fix. Otherwise user is kicked off after login
 
+
+RUN apt-add-repository -y ppa:ansible/ansible && \
+    apt update && \
+    apt install -y ansible && \
+    apt upgrade -y && \
+    apt dist-upgrade -y && \
+    apt autoremove -y && \
+    apt clean && \
     sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
-
     sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-
     echo "### End Of Installation"
-
 
 ### End installation
 

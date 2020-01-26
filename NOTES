@@ -5,3 +5,5 @@ still need docker run --privileged=true or iptables will failed.
 visit http://www.jlee.biz/iptables-in-docker-permission-denied/ 
 hardening.sh will fixed start issue. This only to init needed files.
 
+# Docker Upgrade others
+# refer https://github.com/docker/docker/issues/1724
