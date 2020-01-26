@@ -58,7 +58,7 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && \
     sudo \
     rsyslog \
     software-properties-common \
-    vim-tiny &&
+    vim-tiny
 
 # Install ansible
 
