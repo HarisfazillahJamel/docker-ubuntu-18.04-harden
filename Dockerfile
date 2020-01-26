@@ -43,9 +43,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN dpkg-divert --local --rename --add /sbin/initctl && \
     ln -sf /bin/true /sbin/initctl && \
     mkdir /var/run/sshd && \
-
     apt-get update && \
-
     apt-get install -y \
     ssh \
     ssh-client \
@@ -60,12 +58,11 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && \
     sudo \
     rsyslog \
     software-properties-common \
-    vim-tiny && \
-
+    vim-tiny &&
 
 # Install ansible
 
-    apt-add-repository -y ppa:ansible/ansible && \
+RUN apt-add-repository -y ppa:ansible/ansible && \
     apt-get update && \
     apt-get install -y ansible && \
 
@@ -83,6 +80,8 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && \
 # SSH login fix. Otherwise user is kicked off after login
 
     sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
+
+    sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
 
     echo "### End Of Installation"
 
@@ -134,3 +133,4 @@ VOLUME ["/var/run/sshd"]
 # Set default container command
 
 CMD ["/bin/bash","/hardening.sh"]
+CMD ["/usr/sbin/sshd", "-D"]
