@@ -62,34 +62,45 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && \
     vim-tiny && \
 
 
-echo "Install ansible" \
+# Install ansible
 
     apt-add-repository -y ppa:ansible/ansible && \
     apt-get update && \
     apt-get install -y ansible && \
 
-echo "Upgrade others refer https://github.com/docker/docker/issues/1724" \
+# Upgrade others
+# refer https://github.com/docker/docker/issues/1724
 
     apt-get upgrade -y && \
+
+# cleanup
     apt-get clean && \
 
-echo "SSH Server and SSH login fix. Otherwise user is kicked off after login" \
+
+# setup ssh server
+
+# SSH login fix. Otherwise user is kicked off after login
 
     sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
 
     echo "### End Of Installation"
 
+
+### End installation
+
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile && \
 
-echo "create the auth.log file or fail2ban will failed still need docker run --privileged=true or iptables will failed." \
-echo "hardening.sh will fixed start issue. This only to init needed files." \
+# create the auth.log file or fail2ban will failed
+# still need docker run --privileged=true or iptables will failed.
+# http://www.jlee.biz/iptables-in-docker-permission-denied/
+# hardening.sh will fixed start issue. This only to init needed files.
 
     touch /var/log/auth.log && \
 ### error no user ####    chown syslog:adm /var/log/auth.log && \
     service fail2ban restart && \
 
-echo "Add user1" \
+# Add user1
 
     useradd user1 -m -s /bin/bash && \
     pwgen -N 1 > password.txt && \
@@ -108,20 +119,22 @@ echo "Add user1" \
     echo " " && \
     echo "########################################" && \
 
-echo "A GITHUB copy of linuxmalaysia/docker-ubuntu-18.04-harden" \
+# A GITHUB copy of linuxmalaysia/docker-ubuntu-18.04-harden
 
     cd /home/user1/GITHUB && \
     git clone https://github.com/HarisfazillahJamel/docker-ubuntu-18.04-harden.git && \
     cd && \
-    pwd \
+    pwd
 
-echo "Hardening Initialization and Startup Script"
-
+# Hardening Initialization and Startup Script
 ADD hardening.sh /hardening.sh
 RUN chmod 755 /hardening.sh
 
+# Expose the default port
 EXPOSE 22
 
 VOLUME ["/var/run/sshd"]
+
+# Set default container command
 
 CMD ["/bin/bash","/hardening.sh"]
