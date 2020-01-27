@@ -7,3 +7,8 @@ hardening.sh will fixed start issue. This only to init needed files.
 
 # Docker Upgrade others
 # refer https://github.com/docker/docker/issues/1724
+
+Disable ASIMP ansible-hardening for error in audit.
+
+TASK [ansible-hardening : Adjust auditd/audispd configurations] ****************
+fatal: [127.0.0.1]: FAILED! => {"msg": "No first item, sequence was empty."}
