@@ -101,11 +101,12 @@ service ssh restart
 service ssh stop
 
 # docker run --privileged=true need to be used for iptables related.
+### permission error during iptable init
 
-ufw allow 22/tcp
-ufw enable
-ufw status
-ufw default deny
+#ufw allow 22/tcp
+#ufw enable
+#ufw status
+#ufw default deny
 
 # Crete SSH Key
 
