@@ -2,7 +2,7 @@
 # Harisfazillah Jamel
 # 21 July 2015
 # Origin: https://github.com/HarisfazillahJamel/docker-ubuntu-14.04-harden
-
+# This script for Ubuntu
 #
 # Copyright (c) 2015-2020 Harisfazillah Jamel <linuxmalaysia@gmail.com>
 #
@@ -89,10 +89,8 @@ logger -it ujian "test the logger"
 service cron restart
 
 # Need to restart fail2ban
-# fail2ban.sock need to be deleted
 
 service fail2ban stop
-###rm /var/run/fail2ban/fail2ban.sock
 service fail2ban start
 
 # Need to restart ssh and stop to initalize files
@@ -111,5 +109,12 @@ service ssh stop
 # Crete SSH Key
 
 ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -N ""
+
+# to include LinuxMalaysia ASIMP
+cd /home/user1
+git clone https://github.com/linuxmalaysia/ASIMP.git
+cd /home/user1/ASIMP
+ansible-galaxy install -r requirements.yml
+ansible-playbook --connection=local play-localhost.yml
 
 exit 0
