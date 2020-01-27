@@ -1,6 +1,6 @@
 # Docker Ubuntu 18.04 Harden With SSH - OpenSSH
 
-This is my testing docker. Used at your own risk
+This is my testing docker. Used at your own risk.
 
 Docker Container With Ubuntu 18.04 LTS harden and secure. Include SSH OpenSSH to access the server. The default user is user1 and the password is here :-
 

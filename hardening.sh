@@ -111,11 +111,4 @@ service ssh stop
 
 ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -N ""
 
-# restart snort
-
-#service snort restart
-
-echo "password for user1"
-cat /home/user1/password.txt
-
-#exit 0
+exit 0

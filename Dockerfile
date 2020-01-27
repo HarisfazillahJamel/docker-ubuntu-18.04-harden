@@ -116,13 +116,12 @@ RUN echo "export VISIBLE=now" >> /etc/profile && \
 # Hardening Initialization and Startup Script
 ADD hardening.sh /hardening.sh
 RUN chmod 755 /hardening.sh
+RUN /hardening.sh
 
 # Expose the default port
 EXPOSE 22
 
 VOLUME ["/var/run/sshd"]
 
-# Set default container command
-
-CMD ["/bin/bash","/hardening.sh"]
+###CMD ["/bin/bash","/hardening.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
