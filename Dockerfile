@@ -90,7 +90,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile && \
 
 RUN useradd user1 -m -s /bin/bash && \
     pwgen -yN 1 > password2.txt && \
-    echo"Xa0Iegh3" > password.txt && \
+    echo "Xa0Iegh3" > password.txt && \
     echo "user1:`cat password.txt`" | chpasswd && \
     usermod -a -G sudo user1 && \
     mkdir -p /home/user1/GITHUB && \
