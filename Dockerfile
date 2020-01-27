@@ -82,21 +82,22 @@ RUN apt-add-repository -y ppa:ansible/ansible && \
 
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile && \
-
     touch /var/log/auth.log && \
-### error no user ####    chown syslog:adm /var/log/auth.log && \
     service fail2ban restart && \
+    echo "### End Of fail2ban"
 
 # Add user1
 
-    useradd user1 -m -s /bin/bash && \
+RUN useradd user1 -m -s /bin/bash && \
     pwgen -N 1 > password.txt && \
     echo "user1:`cat password.txt`" | chpasswd && \
     usermod -a -G sudo user1 && \
     mkdir -p /home/user1/GITHUB && \
     chown user1:user1 /home/user1/GITHUB && \
+    echo "PASSWORD For user1 is `cat password.txt`" && \
+    echo "### End Of add user1"
 
-    echo "########################################" && \
+RUN echo "########################################" && \
     echo " " && \
     echo "PASSWORD For user1 is `cat password.txt`" && \
     echo " " && \
@@ -105,9 +106,6 @@ RUN echo "export VISIBLE=now" >> /etc/profile && \
     echo "docker run --privileged=true -it -d -P --name my_ubuntu18 linuxmalaysia/docker-ubuntu-18.04-harden" && \
     echo " " && \
     echo "########################################" && \
-
-# A GITHUB copy of linuxmalaysia/docker-ubuntu-18.04-harden
-
     cd /home/user1/GITHUB && \
     git clone https://github.com/HarisfazillahJamel/docker-ubuntu-18.04-harden.git && \
     cd && \
@@ -123,5 +121,4 @@ EXPOSE 22
 
 VOLUME ["/var/run/sshd"]
 
-###CMD ["/bin/bash","/hardening.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
