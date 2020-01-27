@@ -34,24 +34,24 @@ if [ -f /etc/dpkg/dpkg.cfg.d/excludes ] || [ -f /etc/dpkg/dpkg.cfg.d/excludes.dp
         mv /etc/dpkg/dpkg.cfg.d/excludes /etc/dpkg/dpkg.cfg.d/excludes.dpkg-tmp
     fi
     echo "Updating package list and upgrading packages..."
-    apt-get update
-    # apt-get upgrade asks for confirmation before upgrading packages to let the user stop here
-    apt-get upgrade
+    apt update
+    # apt-get upgrade dont asks for confirmation before upgrading packages to let the user stop here
+    apt upgrade -y
     echo "Restoring system documentation..."
     echo "Reinstalling packages with files in /usr/share/man/ ..."
     # Reinstallation takes place in two steps because a single dpkg --verified
     # command generates very long parameter list for "xargs dpkg -S" and may go
     # over ARG_MAX. Since many packages have man pages the second download
     # handles a much smaller amount of packages.
-    dpkg -S /usr/share/man/ |sed 's|, |\n|g;s|: [^:]*$||' | DEBIAN_FRONTEND=noninteractive xargs apt-get install --reinstall -y
+    dpkg -S /usr/share/man/ |sed 's|, |\n|g;s|: [^:]*$||' | DEBIAN_FRONTEND=noninteractive xargs apt install --reinstall -y
     echo "Reinstalling packages with system documentation in /usr/share/doc/ .."
     # This step processes the packages which still have missing documentation
     dpkg --verify --verify-format rpm | awk '/..5......   \/usr\/share\/doc/ {print $2}' | sed 's|/[^/]*$||' | sort |uniq \
-         | xargs dpkg -S | sed 's|, |\n|g;s|: [^:]*$||' | uniq | DEBIAN_FRONTEND=noninteractive xargs apt-get install --reinstall -y
+         | xargs dpkg -S | sed 's|, |\n|g;s|: [^:]*$||' | uniq | DEBIAN_FRONTEND=noninteractive xargs apt install --reinstall -y
     echo "Restoring system translations..."
     # This step processes the packages which still have missing translations
     dpkg --verify --verify-format rpm | awk '/..5......   \/usr\/share\/locale/ {print $2}' | sed 's|/[^/]*$||' | sort |uniq \
-         | xargs dpkg -S | sed 's|, |\n|g;s|: [^:]*$||' | uniq | DEBIAN_FRONTEND=noninteractive xargs apt-get install --reinstall -y
+         | xargs dpkg -S | sed 's|, |\n|g;s|: [^:]*$||' | uniq | DEBIAN_FRONTEND=noninteractive xargs apt install --reinstall -y
     if dpkg --verify --verify-format rpm | awk '/..5......   \/usr\/share\/doc/ {exit 1}'; then
         echo "Documentation has been restored successfully."
         rm /etc/dpkg/dpkg.cfg.d/excludes.dpkg-tmp
@@ -74,7 +74,8 @@ if dpkg-query --show --showformat='${db:Status-Status}\n' ubuntu-server 2> /dev/
     DEBIAN_FRONTEND=noninteractive apt-get install -y landscape-common
 fi
 
-
+apt autoremove
+apt clean all
 
 # need to restart rsyslog
 
@@ -91,7 +92,7 @@ service cron restart
 # fail2ban.sock need to be deleted
 
 service fail2ban stop
-rm /var/run/fail2ban/fail2ban.sock
+###rm /var/run/fail2ban/fail2ban.sock
 service fail2ban start
 
 # Need to restart ssh and stop to initalize files
@@ -100,12 +101,11 @@ service ssh restart
 service ssh stop
 
 # docker run --privileged=true need to be used for iptables related.
-# ufw remove for this version. 
 
-#ufw allow 22/tcp
-#ufw enable
-#ufw status
-#ufw default deny
+ufw allow 22/tcp
+ufw enable
+ufw status
+ufw default deny
 
 # Crete SSH Key
 
